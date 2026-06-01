@@ -1,13 +1,15 @@
 ---
 name: food-chain-monitor
-version: 2.0.0
+version: 2.1.0
 description: >
   Re-stress-tests an idea that was previously battle-tested with food chain. Takes a Battle
   Log from a prior session plus a description of what changed, then runs a focused battle
   targeting only the NEW assumptions introduced by the change. Does not re-test what already
   survived. Works in Claude.ai, Claude Code, Cursor, Windsurf, Copilot with no dependencies.
-  Trigger on: "food chain monitor", "re-battle this", "what changed since last battle",
-  "stress test the pivot", "re-test after changes", "has my moat held up".
+when_to_use: >
+  "food chain monitor", "re-battle this", "what changed since last battle",
+  "stress test the pivot", "re-test after changes", "has my moat held up"
+argument-hint: "[paste battle log + what changed]"
 ---
 
 # Food Chain Monitor
@@ -37,22 +39,35 @@ If the user provides no Battle Log, do NOT proceed. Redirect to `food-chain-idea
 
 Identify exactly what is new. Do not re-litigate settled assumptions.
 
-```
-DELTA ANALYSIS
-Prior battle: [date, original idea, evolved idea from battle log]
-What changed: [user's description, quoted verbatim]
-New assumptions introduced:
-  1. [assumption] — why this is new
-  2. [assumption] — why this is new
-  [max 5 — if more, pick the 5 most vulnerable]
-Prior patches still valid:
-  - [patch from battle log] — STILL VALID / NEEDS RE-EVALUATION
-Prior apex predator: [animal from battle log] — still relevant? [YES / NO + one sentence why]
+```markdown
+## Delta Analysis
+
+| Field | Value |
+|---|---|
+| **Prior battle** | [date, original idea, evolved idea from battle log] |
+| **What changed** | [user's description, quoted verbatim] |
+
+### New Assumptions Introduced
+
+| # | Assumption | Why New |
+|---|---|---|
+| 1 | [assumption] | [why this is new] |
+| 2 | [assumption] | [why this is new] |
+| ... | [max 5 — pick the 5 most vulnerable] | ... |
+
+### Prior Patches
+
+| Patch | Status |
+|---|---|
+| [patch from battle log] | STILL VALID / NEEDS RE-EVALUATION |
+| ... | ... |
+
+**Prior apex predator:** [animal from battle log] — still relevant? [YES / NO + one sentence why]
 ```
 
 If the change introduces ZERO new assumptions (cosmetic change, minor UX tweak), skip the battle and issue:
-```
-MONITOR VERDICT: NO NEW ASSUMPTIONS — PRIOR BATTLE LOG STANDS. No delta battle needed.
+```markdown
+> **MONITOR VERDICT:** NO NEW ASSUMPTIONS — PRIOR BATTLE LOG STANDS. No delta battle needed.
 ```
 
 ---
@@ -99,21 +114,21 @@ After final round, identify the **delta apex predator** — the animal that scor
 
 Synthesize the delta battle into a clear status update:
 
-```
-MONITOR VERDICT
-Prior UAS still valid: [YES / WEAKENED / INVALIDATED]
-  [If WEAKENED: which specific element dropped and by how much]
-  [If INVALIDATED: which new assumption broke it]
-New threat identified: [one sentence describing the delta apex predator's core attack, or "none"]
-Recommended action: [CONTINUE / PATCH / RE-BATTLE]
+```markdown
+## Monitor Verdict
+
+| Field | Value |
+|---|---|
+| **Prior UAS still valid** | [YES / WEAKENED / INVALIDATED] |
+| **Detail** | [If WEAKENED: which element dropped. If INVALIDATED: which assumption broke it] |
+| **New threat identified** | [one sentence — delta apex predator's core attack, or "none"] |
+| **Recommended action** | [CONTINUE / PATCH / RE-BATTLE] |
 ```
 
 **Decision logic:**
 - **CONTINUE** — All new assumptions survived. Prior UAS holds. No action needed.
 - **PATCH** — One or more new assumptions are vulnerable but fixable. Provide the specific patch:
-  ```
-  RECOMMENDED PATCH: [concrete change to the idea that neutralizes the new threat]
-  ```
+  > **RECOMMENDED PATCH:** [concrete change to the idea that neutralizes the new threat]
 - **RE-BATTLE** — The change fundamentally undermines the prior battle results. The idea has shifted enough that a full `food-chain-ideation` session is needed with the updated idea.
 
 ---
@@ -122,24 +137,26 @@ Recommended action: [CONTINUE / PATCH / RE-BATTLE]
 
 APPEND to the prior Battle Log. Never overwrite it — the history matters.
 
-```
-BATTLE LOG UPDATE
-Date: [current date]
-Type: Monitor battle
-Change tested: [what changed — one line]
-New assumptions tested: [count]
-Delta apex predator: [animal name, or "prior apex holds" if no new apex emerged]
-New patches applied: [list, or "none needed"]
-UAS status: [VALID / WEAKENED / INVALIDATED]
-Recommended action: [CONTINUE / PATCH / RE-BATTLE]
+```markdown
+## Battle Log Update
+
+Append to the prior Battle Log. Never overwrite.
+
+> **Date:** [current date]
+> **Type:** Monitor battle
+> **Change tested:** [what changed — one line]
+> **New assumptions tested:** [count]
+> **Delta apex predator:** [animal name, or "prior apex holds" if no new apex emerged]
+> **New patches applied:** [list, or "none needed"]
+> **UAS status:** [VALID / WEAKENED / INVALIDATED]
+> **Recommended action:** [CONTINUE / PATCH / RE-BATTLE]
+
 ---
 [Full battle log history preserved above this line]
 ```
 
 If the user has an Action Log from `apex-to-action`, also note:
-```
-Action Log impact: [which actions from the prior log are affected by this change, if any]
-```
+> **Action Log impact:** [which actions from the prior log are affected by this change, if any]
 
 ---
 

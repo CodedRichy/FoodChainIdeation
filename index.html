@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Food Chain — A Field Guide to Idea Predators</title>
-  <meta name="description" content="52 animals. Elimination rounds. Only the strongest ideas survive. An adversarial stress-testing field guide for Claude Code.">
+  <meta name="description" content="64 animals. Elimination rounds. Only the strongest ideas survive. An adversarial stress-testing field guide for Claude Code.">
   <meta property="og:title" content="Food Chain — Your Idea Has Predators">
-  <meta property="og:description" content="52 animals. Elimination rounds. A field guide to adversarial stress-testing.">
+  <meta property="og:description" content="64 animals. Elimination rounds. A field guide to adversarial stress-testing.">
   <meta property="og:image" content="banner.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -20,6 +20,7 @@
       --bg: #f0ebe1;
       --bg-paper: #faf8f3;
       --bg-white: #ffffff;
+      --bg-cork: #e8dcc8;
       --green-deep: #1e3a0e;
       --green: #2d5016;
       --green-mid: #4a7a2e;
@@ -104,10 +105,18 @@
     .hero {
       min-height: 100vh; display: flex; align-items: center;
       position: relative; padding: 7rem 2rem 4rem;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -30%; right: -15%; width: 70vw; height: 70vw;
+      background: radial-gradient(circle, rgba(45, 80, 22, 0.04) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
     }
     .hero-inner {
-      max-width: 1100px; margin: 0 auto; width: 100%;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
     }
     .hero-label {
       font-family: var(--hand); font-size: 1.7rem; color: var(--green-mid);
@@ -118,8 +127,10 @@
       font-weight: 900; line-height: 1.08; margin-bottom: 1.5rem; color: var(--text);
     }
     .hero-title .accent {
-      color: var(--green);
-      font-style: italic;
+      color: var(--green); font-style: italic;
+      background: linear-gradient(120deg, var(--green) 0%, var(--green-mid) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .hero-subtitle {
       font-size: 1.1rem; color: var(--text-dim);
@@ -127,16 +138,107 @@
     }
     .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn {
-      display: inline-flex; align-items: center; padding: 0.7rem 1.6rem;
+      display: inline-flex; align-items: center; padding: 0.75rem 1.8rem;
       border-radius: 4px; font-family: var(--body); font-size: 0.92rem;
       font-weight: 600; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none;
     }
     .btn-primary { background: var(--green); color: #fff; }
-    .btn-primary:hover { background: var(--green-deep); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(45, 80, 22, 0.2); }
+    .btn-primary:hover { background: var(--green-deep); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(45, 80, 22, 0.25); }
     .btn-secondary { background: transparent; color: var(--green); border: 1.5px solid var(--green-mid); }
     .btn-secondary:hover { background: var(--green-bg); border-color: var(--green); }
 
-    /* ═══ Field Log (Terminal replacement) ═══ */
+    /* ═══ Ecosystem Orbit ═══ */
+    .ecosystem-viz {
+      position: relative;
+      width: 100%; aspect-ratio: 1;
+      max-width: 480px; margin: 0 auto;
+    }
+    .orbit-ring {
+      position: absolute; border: 1px dashed var(--border);
+      border-radius: 50%; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .orbit-ring-1 { width: 70%; height: 70%; opacity: 0.5; }
+    .orbit-ring-2 { width: 100%; height: 100%; opacity: 0.3; }
+    .orbit-center {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center; z-index: 2;
+    }
+    .orbit-idea {
+      width: 90px; height: 90px;
+      background: var(--bg-white);
+      border: 2px solid var(--green-mid);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--display); font-size: 0.7rem; font-weight: 700;
+      color: var(--green); text-transform: uppercase; letter-spacing: 0.1em;
+      box-shadow: 0 4px 24px rgba(45, 80, 22, 0.12);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .orbit-idea.hit {
+      animation: ideaPulse 0.5s ease;
+    }
+    @keyframes ideaPulse {
+      0% { box-shadow: 0 4px 24px rgba(45, 80, 22, 0.12); }
+      50% { box-shadow: 0 0 0 12px rgba(122, 26, 18, 0.15), 0 4px 24px rgba(122, 26, 18, 0.3); border-color: var(--red); }
+      100% { box-shadow: 0 4px 24px rgba(45, 80, 22, 0.12); border-color: var(--green-mid); }
+    }
+    .orbit-idea-label {
+      position: absolute; bottom: -28px;
+      font-family: var(--hand); font-size: 1.1rem; color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .orbit-animal {
+      position: absolute;
+      width: 52px; height: 52px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      box-shadow: 1px 2px 8px rgba(0,0,0,0.06);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1;
+      cursor: default;
+    }
+    .orbit-animal::after {
+      content: attr(data-name);
+      position: absolute; bottom: -20px;
+      font-family: var(--hand); font-size: 0.85rem; color: var(--text-muted);
+      white-space: nowrap; opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .orbit-animal:hover::after { opacity: 1; }
+    .orbit-animal.attacking {
+      z-index: 3;
+      animation: animalStrike 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes animalStrike {
+      0% { transform: translate(var(--tx), var(--ty)) scale(1); }
+      40% { transform: translate(0, 0) scale(1.3); }
+      60% { transform: translate(0, 0) scale(1.3); }
+      100% { transform: translate(var(--tx), var(--ty)) scale(1); }
+    }
+    .orbit-animal.eliminated {
+      opacity: 0.15;
+      filter: grayscale(1);
+      transform: translate(var(--tx), var(--ty)) scale(0.7) !important;
+    }
+    .orbit-animal.apex {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(122, 26, 18, 0.15), 1px 2px 12px rgba(0,0,0,0.1);
+    }
+    .orbit-status {
+      position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
+      font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted);
+      text-align: center; white-space: nowrap;
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .orbit-status.visible { opacity: 1; }
+
+    /* ═══ Field Log ═══ */
     .field-log {
       background: var(--bg-white);
       border: 1px solid var(--border);
@@ -183,12 +285,6 @@
     .term-line.dim { color: var(--text-muted); }
     .term-line.round { color: var(--brown); font-weight: 700; margin-top: 0.5em; }
     .term-line.verdict { font-weight: 700; font-size: 0.82rem; margin-top: 0.5em; }
-    .hero-replay { display: none; margin-top: 0.5rem; text-align: right; }
-    .hero-replay button {
-      background: none; border: none; color: var(--text-muted);
-      font-family: var(--hand); font-size: 1.35rem; cursor: pointer; transition: color 0.3s;
-    }
-    .hero-replay button:hover { color: var(--green); }
 
     /* ═══ Sections ═══ */
     .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
@@ -281,8 +377,100 @@
     }
     .outcome-card p { color: var(--text-dim); font-size: 0.88rem; }
 
-    /* ═══ Animals ═══ */
-    .animal-filters { display: flex; gap: 0.5rem; margin-bottom: 1.75rem; }
+    /* ═══ Real Battles ═══ */
+    .real-battles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .rb-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 1.75rem;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 1px 2px 8px rgba(0,0,0,0.04);
+    }
+    .rb-card:hover {
+      box-shadow: 2px 6px 24px rgba(0,0,0,0.09);
+      transform: translateY(-3px);
+    }
+    .rb-card[data-outcome="survived"] { border-left: 3px solid var(--green); }
+    .rb-card[data-outcome="restructured"] { border-left: 3px solid var(--amber); }
+    .rb-card[data-outcome="killed"] { border-left: 3px solid var(--red); }
+    .rb-card-header { margin-bottom: 0.6rem; }
+    .rb-idea-name {
+      font-family: var(--display); font-size: 1.2rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.5rem;
+    }
+    .rb-badges {
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+    .rb-badge-outcome {
+      display: inline-block; padding: 0.12rem 0.55rem;
+      border: 2px solid currentColor; border-radius: 2px;
+      font-family: var(--display); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.65rem;
+      transform: rotate(-1.5deg);
+    }
+    .rb-badge-outcome.survived { color: var(--green); }
+    .rb-badge-outcome.restructured { color: var(--amber); }
+    .rb-badge-outcome.killed { color: var(--red); }
+    .rb-badge-mode {
+      display: inline-block; padding: 0.1rem 0.5rem;
+      background: var(--green-bg); border: 1px solid var(--border);
+      border-radius: 2px; font-family: var(--mono); font-size: 0.65rem;
+      color: var(--text-dim); letter-spacing: 0.05em;
+    }
+    .rb-apex {
+      font-family: var(--body); font-size: 0.85rem; color: var(--text-dim);
+      margin-bottom: 0.6rem;
+    }
+    .rb-apex-emoji { font-size: 1.05rem; }
+    .rb-apex-name { font-weight: 600; color: var(--text); }
+    .rb-hook {
+      font-family: var(--display); font-style: italic; font-size: 0.9rem;
+      color: var(--brown); line-height: 1.5; margin-bottom: 0.85rem;
+      padding-left: 0.75rem; border-left: 2px solid var(--border);
+    }
+    .rb-toggle-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--bg-paper); border: 1px solid var(--border);
+      border-radius: 2px; padding: 0.4rem 0.9rem;
+      font-family: var(--body); font-size: 0.8rem; font-weight: 600;
+      color: var(--green); cursor: pointer; transition: all 0.3s;
+    }
+    .rb-toggle-btn:hover { background: var(--green-bg); border-color: var(--green-mid); }
+    .rb-toggle-btn .rb-arrow {
+      display: inline-block; transition: transform 0.3s;
+      font-size: 0.7rem;
+    }
+    .rb-card.rb-open .rb-toggle-btn .rb-arrow { transform: rotate(90deg); }
+    .rb-accordion {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .rb-card.rb-open .rb-accordion { max-height: 800px; }
+    .rb-accordion-inner {
+      padding-top: 1rem; margin-top: 0.85rem;
+      border-top: 1px dashed var(--border);
+    }
+    .rb-field { margin-bottom: 0.65rem; }
+    .rb-field-label {
+      font-family: var(--hand); font-size: 1.05rem; color: var(--green-mid);
+      margin-bottom: 0.1rem;
+    }
+    .rb-field-value {
+      font-size: 0.85rem; color: var(--text-dim); line-height: 1.55;
+    }
+    @media (max-width: 768px) {
+      .real-battles-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ═══ Animals — Specimen Board ═══ */
+    .animal-filters { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
     .filter-btn {
       font-family: var(--body); font-size: 0.82rem; padding: 0.35rem 0.9rem;
       border-radius: 2px; border: 1px solid var(--border); background: transparent;
@@ -290,22 +478,58 @@
     }
     .filter-btn:hover { border-color: var(--green-mid); color: var(--green); }
     .filter-btn.active { background: var(--green-tag-bg); border-color: var(--green-mid); color: var(--green); }
-    .animal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+    .specimen-board {
+      background:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23c)' opacity='0.06'/%3E%3C/svg%3E"),
+        var(--bg-cork);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 2rem 1.5rem;
+      box-shadow: inset 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .animal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
     .animal-card {
-      background: var(--bg-white); border: 1px solid var(--border);
-      border-radius: 2px; padding: 1.5rem; transition: all 0.3s; cursor: default; position: relative;
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: 1px;
+      padding: 1.5rem 1.5rem 1.25rem;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+      position: relative;
+      box-shadow: 1px 2px 4px rgba(0,0,0,0.04), 2px 4px 8px rgba(0,0,0,0.03);
     }
     .animal-card:hover {
-      box-shadow: 2px 4px 16px rgba(0,0,0,0.06);
-      transform: translateY(-2px);
+      box-shadow: 4px 8px 32px rgba(0,0,0,0.12), 2px 4px 12px rgba(0,0,0,0.06);
+      transform: translateY(-6px) rotate(0deg) !important;
+      z-index: 10;
     }
     .animal-card.hidden { display: none; }
+    .animal-pin {
+      position: absolute; top: -6px; left: 50%;
+      transform: translateX(-50%);
+      width: 16px; height: 16px;
+      background: radial-gradient(circle at 40% 35%, #d44 0%, #922 60%, #611 100%);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(0,0,0,0.2);
+      z-index: 2;
+    }
+    .animal-pin::after {
+      content: '';
+      position: absolute; top: 2px; left: 3px;
+      width: 5px; height: 4px;
+      background: rgba(255,255,255,0.4);
+      border-radius: 50%;
+    }
     .specimen-num {
       position: absolute; top: 0.6rem; right: 0.75rem;
       font-family: var(--hand); font-size: 1.05rem; color: var(--text-muted);
     }
     .animal-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; }
-    .animal-emoji { font-size: 1.8rem; flex-shrink: 0; }
+    .animal-emoji { font-size: 2rem; flex-shrink: 0; }
     .animal-name { font-family: var(--display); font-size: 1.2rem; font-weight: 700; }
     .animal-tag {
       display: inline-block; font-family: var(--body); font-size: 0.68rem; font-style: italic;
@@ -396,27 +620,62 @@
       font-family: var(--hand); font-size: 1.7rem; color: var(--green-mid);
       margin-bottom: 2.75rem; transform: rotate(-1deg); display: inline-block;
     }
+    .install-tabs {
+      display: flex; gap: 0; justify-content: center; margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      max-width: 620px; margin-left: auto; margin-right: auto;
+    }
+    .install-tab {
+      font-family: var(--body); font-size: 0.85rem; font-weight: 600;
+      padding: 0.65rem 1.5rem; border: none; background: transparent;
+      color: var(--text-muted); cursor: pointer; transition: all 0.3s;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+    }
+    .install-tab:hover { color: var(--green-mid); }
+    .install-tab.active { color: var(--green); border-bottom-color: var(--green); }
+    .install-pane { display: none; }
+    .install-pane.active { display: block; }
     .install-card {
       display: inline-flex; align-items: center; gap: 1rem;
       background: var(--bg-white); border: 1px solid var(--border);
-      border-radius: 2px; padding: 0.9rem 1.4rem; margin-bottom: 2rem;
+      border-radius: 2px; padding: 0.9rem 1.4rem; margin-bottom: 0.75rem;
       box-shadow: 1px 2px 8px rgba(0,0,0,0.04);
     }
-    .install-card code { font-family: var(--mono); font-size: 0.88rem; color: var(--green); }
+    .install-card code { font-family: var(--mono); font-size: 0.82rem; color: var(--green); }
     .install-copy {
       background: var(--green-bg); border: 1px solid var(--green-mid); color: var(--green);
       padding: 0.35rem 0.75rem; border-radius: 2px;
       font-family: var(--mono); font-size: 0.72rem; cursor: pointer; transition: all 0.3s;
     }
     .install-copy:hover { background: rgba(45, 80, 22, 0.12); }
-    .install-envs { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
-    .env-pill {
-      font-family: var(--body); font-size: 0.75rem; font-style: italic;
-      color: var(--text-dim); border: 1px solid var(--border);
-      padding: 0.25rem 0.65rem; border-radius: 2px; background: var(--bg-paper);
+    .install-step-label {
+      font-family: var(--hand); font-size: 1.1rem; color: var(--text-muted);
+      margin-bottom: 0.5rem; margin-top: 1rem;
+    }
+    .install-step-label:first-child { margin-top: 0; }
+    .install-manual-hint {
+      font-family: var(--body); font-size: 0.82rem; color: var(--text-dim);
+      margin-top: 0.75rem; font-style: italic; line-height: 1.6;
+    }
+    .install-manual-hint code {
+      font-family: var(--mono); font-size: 0.78rem; color: var(--green-mid);
+      background: var(--green-bg); padding: 0.1rem 0.4rem; border-radius: 2px;
+    }
+    .install-pane-inner {
+      max-width: 620px; margin: 0 auto; text-align: center;
+      padding: 1.5rem 0 0.5rem;
+    }
+    .install-works-with {
+      font-family: var(--body); font-size: 0.78rem; color: var(--text-muted);
+      margin-top: 1.25rem; font-style: italic;
     }
     .roadmap {
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem;
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 3.5rem;
+      padding-top: 2.5rem; border-top: 1px solid var(--border-light);
+    }
+    .roadmap-label {
+      width: 100%; font-family: var(--hand); font-size: 1.35rem;
+      color: var(--text-muted); margin-bottom: 0.25rem;
     }
     .roadmap-item {
       background: var(--bg-paper); border: 1px dashed var(--border);
@@ -424,12 +683,10 @@
     }
     .roadmap-item .skill-name { margin-bottom: 0.15rem; }
     .roadmap-item p { font-size: 0.78rem; color: var(--text-dim); font-style: italic; }
-    .coming-soon {
-      font-family: var(--hand); font-size: 1.2rem; color: var(--amber);
-    }
+    .coming-soon { font-family: var(--hand); font-size: 1.2rem; color: var(--amber); }
 
     /* ═══ Footer ═══ */
-    .footer { border-top: 1px solid var(--border); padding: 3rem 2rem; margin-top: 0; }
+    .footer { border-top: 1px solid var(--border); padding: 3rem 2rem; }
     .footer-inner {
       max-width: 1100px; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
@@ -451,10 +708,15 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
 
     @keyframes blink { 50% { opacity: 0; } }
+    @keyframes float {
+      0%, 100% { transform: translate(var(--tx), var(--ty)); }
+      50% { transform: translate(calc(var(--tx) + 4px), calc(var(--ty) - 6px)); }
+    }
 
     @media (max-width: 1024px) {
       .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .hero { min-height: auto; padding-top: 6rem; }
+      .ecosystem-viz { max-width: 340px; }
       .skills-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
@@ -471,10 +733,16 @@
       .outcomes { grid-template-columns: 1fr; }
       .stats-inner { grid-template-columns: repeat(2, 1fr); }
       .footer-inner { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .ecosystem-viz { max-width: 300px; }
+      .orbit-idea { width: 70px; height: 70px; font-size: 0.6rem; }
+      .orbit-animal { width: 40px; height: 40px; font-size: 1.4rem; }
+      .install-tabs { flex-wrap: wrap; gap: 0.25rem; }
+      .install-tab { padding: 0.5rem 1rem; font-size: 0.78rem; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
       .reveal { opacity: 1; transform: none; }
+      .orbit-animal { animation: none !important; }
     }
     ::selection { background: rgba(45, 80, 22, 0.15); color: var(--text); }
   </style>
@@ -488,6 +756,7 @@
       <a href="#" class="nav-logo">FOOD CHAIN</a>
       <div class="nav-links" id="navLinks">
         <a href="#how">How It Works</a>
+        <a href="#real-battles">Real Battles</a>
         <a href="#animals">Specimens</a>
         <a href="#battles">Field Reports</a>
         <a href="#demo">Observation</a>
@@ -511,17 +780,15 @@
           <a href="#install" class="btn btn-secondary">Install the Guide</a>
         </div>
       </div>
-      <div class="hero-terminal">
-        <div class="field-log">
-          <div class="field-log-header">
-            <span class="field-log-title">Field Observation Log</span>
-            <span class="field-log-date">2026.06.01</span>
+      <div class="ecosystem-viz" id="ecosystemViz">
+        <div class="orbit-ring orbit-ring-1"></div>
+        <div class="orbit-ring orbit-ring-2"></div>
+        <div class="orbit-center">
+          <div class="orbit-idea" id="orbitIdea">YOUR<br>IDEA
+            <span class="orbit-idea-label">drop zone</span>
           </div>
-          <div class="field-log-body" id="heroTerminal"></div>
         </div>
-        <div class="hero-replay" id="heroReplay">
-          <button onclick="playHero()">&#8635; replay observation</button>
-        </div>
+        <div class="orbit-status" id="orbitStatus"></div>
       </div>
     </div>
   </section>
@@ -601,6 +868,170 @@
 
   <div class="divider"><span class="divider-leaf">&#9672;</span></div>
 
+  <section class="section" id="real-battles">
+    <div class="container">
+      <h2 class="section-title reveal">Real Battles</h2>
+      <p class="section-subtitle reveal">Every battle below is real. No parameter tuning between tests.</p>
+      <div class="real-battles-grid">
+
+        <!-- Viral Content Repurposer — RESTRUCTURED -->
+        <div class="rb-card reveal" data-outcome="restructured">
+          <div class="rb-card-header">
+            <div class="rb-idea-name">Viral Content Repurposer</div>
+            <div class="rb-badges">
+              <span class="rb-badge-outcome restructured">Restructured</span>
+              <span class="rb-badge-mode">SUBAGENT</span>
+            </div>
+            <div class="rb-apex"><span class="rb-apex-emoji">&#x1F426;&#x200D;&#x2B1B;</span> <span class="rb-apex-name">Crow</span> &mdash; apex predator</div>
+          </div>
+          <div class="rb-hook">&ldquo;Creators don&rsquo;t need speed &mdash; they need structural intelligence.&rdquo;</div>
+          <button class="rb-toggle-btn" onclick="toggleRbCard(this)"><span class="rb-arrow">&#9654;</span> Read full battle</button>
+          <div class="rb-accordion">
+            <div class="rb-accordion-inner">
+              <div class="rb-field">
+                <div class="rb-field-label">Original Idea</div>
+                <div class="rb-field-value">SaaS tool ($29/mo) for solo creators that detects viral content and auto-repurposes across platforms within minutes. Instagram Reel blows up &rarr; YouTube Short, TikTok, Twitter thread, and LinkedIn post are live before the wave peaks.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Ecosystem</div>
+                <div class="rb-field-value">&#x1FAB1; Tapeworm &middot; &#x1F988; Shark &middot; &#x1F422; Tortoise &middot; &#x1F99F; Mosquito &middot; &#x1F426;&#x200D;&#x2B1B; Crow</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Key Rounds</div>
+                <div class="rb-field-value">R1: Crow destroyed the &ldquo;catch the wave&rdquo; premise &mdash; platform algorithms are independent, cross-platform speed provides zero advantage. R2: Creator-in-the-loop killed by notification response latency and temporal fingerprinting. R3: Voice personalization exposed as &ldquo;compounding rigidity&rdquo; since creators pivot every 6&ndash;12 months. R4: Structural optimization creates convergence &mdash; platforms detect and suppress templated uniformity at scale.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Evolved Idea</div>
+                <div class="rb-field-value">Cross-creator structural intelligence platform. Creator uploads content via share sheet (no API dependency). Tool restructures for each platform using emerging format patterns detected across an anonymized creator cohort &mdash; not what worked last month, but what&rsquo;s working right now.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Unfair Advantage</div>
+                <div class="rb-field-value">Anonymized cross-creator performance network detects emerging format patterns 48 hours before public analytics &mdash; a signal that compounds with every creator added and cannot be replicated without rebuilding the entire cohort.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Meeting Notetaker — SURVIVED -->
+        <div class="rb-card reveal reveal-delay-1" data-outcome="survived">
+          <div class="rb-card-header">
+            <div class="rb-idea-name">AI Meeting Notetaker</div>
+            <div class="rb-badges">
+              <span class="rb-badge-outcome survived">Survived</span>
+              <span class="rb-badge-mode">FALLBACK</span>
+            </div>
+            <div class="rb-apex"><span class="rb-apex-emoji">&#x1F426;&#x200D;&#x2B1B;</span> <span class="rb-apex-name">Crow</span> &mdash; apex predator</div>
+          </div>
+          <div class="rb-hook">&ldquo;The meeting bot was a feature, not a product. Survival came from owning the cross-tool org graph.&rdquo;</div>
+          <button class="rb-toggle-btn" onclick="toggleRbCard(this)"><span class="rb-arrow">&#9654;</span> Read full battle</button>
+          <div class="rb-accordion">
+            <div class="rb-accordion-inner">
+              <div class="rb-field">
+                <div class="rb-field-label">Original Idea</div>
+                <div class="rb-field-value">AI notetaker ($19/mo per team) for SMEs. Joins meetings via calendar integration, extracts action items, and auto-assigns them in Slack with deadlines. Target: ops managers at growing startups who lose action items because nobody takes notes.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Ecosystem</div>
+                <div class="rb-field-value">&#x1FAB1; Tapeworm &middot; &#x1F418; Elephant &middot; &#x1F422; Tortoise &middot; &#x1F99F; Mosquito &middot; &#x1F426;&#x200D;&#x2B1B; Crow</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Key Rounds</div>
+                <div class="rb-field-value">R1: Elephant proved Microsoft Copilot and Google Gemini do this for free &mdash; bundled with existing licenses. R2: Zoom AI Companion collapses the repositioned niche. R3: Crow reframed the entire product &mdash; meetings are the wrong input; Slack threads, email, and Loom comments contain more untracked action items. R4: Neither Crow nor Mosquito delivered a lethal blow; the idea absorbed each reframe and expanded its surface.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Evolved Idea</div>
+                <div class="rb-field-value">Omni-channel action capture and routing platform. Extracts action items from meetings, Slack, email, and async video. Pre-seeds organizational graph from Slack workspace data. Routes each item to the right person in the right tool with deadline enforcement and follow-up nudges.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Unfair Advantage</div>
+                <div class="rb-field-value">Cross-tool organizational graph &mdash; mapping who owns what across Slack, email, meetings, and project tools &mdash; compounds with every interaction processed and cannot be replicated by any single-platform player because it requires visibility across ecosystem boundaries they don&rsquo;t control.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MealBot Office Coordinator — KILLED -->
+        <div class="rb-card reveal reveal-delay-2" data-outcome="killed">
+          <div class="rb-card-header">
+            <div class="rb-idea-name">MealBot Office Coordinator</div>
+            <div class="rb-badges">
+              <span class="rb-badge-outcome killed">Killed</span>
+              <span class="rb-badge-mode">FALLBACK</span>
+            </div>
+            <div class="rb-apex"><span class="rb-apex-emoji">&#x1F426;&#x200D;&#x2B1B;</span> <span class="rb-apex-name">Crow</span> &mdash; apex predator</div>
+          </div>
+          <div class="rb-hook">&ldquo;70&ndash;80% of target offices use contracted caterers, not Swiggy. MealBot automates a workflow that barely exists.&rdquo;</div>
+          <button class="rb-toggle-btn" onclick="toggleRbCard(this)"><span class="rb-arrow">&#9654;</span> Read full battle</button>
+          <div class="rb-accordion">
+            <div class="rb-accordion-inner">
+              <div class="rb-field">
+                <div class="rb-field-label">Original Idea</div>
+                <div class="rb-field-value">AI meal coordinator for Indian SMEs (Rs.750&ndash;1500/mo). Handles bulk lunch orders from Swiggy/Zomato, tracks employee preferences and dietary restrictions, manages budgets, and auto-orders daily for offices of 10&ndash;100 employees in Bangalore, Hyderabad, and Pune.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Ecosystem</div>
+                <div class="rb-field-value">&#x1FAB1; Tapeworm &middot; &#x1F402; Ox &middot; &#x1F99D; Raccoon &middot; &#x1F40A; Crocodile &middot; &#x1F426;&#x200D;&#x2B1B; Crow</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Key Rounds</div>
+                <div class="rb-field-value">R1: Crow delivered a structurally fatal blow &mdash; the ICP does not order from Swiggy daily, they use contracted caterers. R2: Narrowed ICP to small startups, but Crow proved growing startups churn into the caterer model within 12&ndash;18 months. R3: Caterer management pivot hit a wall &mdash; the relationship is optimized for informality, and digitization adds friction. R4: Multi-vendor orchestration already exists &mdash; it&rsquo;s called Sodexo.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Evolved Idea</div>
+                <div class="rb-field-value">B2B caterer procurement intelligence for facility managers at 500+ employee companies. Caterer performance benchmarking, contract renewal intelligence, and vendor discovery &mdash; a procurement tool, not a meal coordinator.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Unfair Advantage</div>
+                <div class="rb-field-value">Cross-company caterer benchmarking network effect: every new client&rsquo;s caterer ratings, pricing, and hygiene scores improve the dataset, giving facility managers negotiation leverage no single-company tool can replicate.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email Audio Briefing — KILLED -->
+        <div class="rb-card reveal reveal-delay-3" data-outcome="killed">
+          <div class="rb-card-header">
+            <div class="rb-idea-name">Email Audio Briefing</div>
+            <div class="rb-badges">
+              <span class="rb-badge-outcome killed">Killed</span>
+              <span class="rb-badge-mode">FALLBACK</span>
+            </div>
+            <div class="rb-apex"><span class="rb-apex-emoji">&#x1F426;&#x200D;&#x2B1B;</span> <span class="rb-apex-name">Crow</span> &mdash; apex predator</div>
+          </div>
+          <div class="rb-hook">&ldquo;You started with a megaphone and ended with a magnifying glass, and Google already makes both.&rdquo;</div>
+          <button class="rb-toggle-btn" onclick="toggleRbCard(this)"><span class="rb-arrow">&#9654;</span> Read full battle</button>
+          <div class="rb-accordion">
+            <div class="rb-accordion-inner">
+              <div class="rb-field">
+                <div class="rb-field-label">Original Idea</div>
+                <div class="rb-field-value">Browser extension + mobile app ($9/mo) that summarizes unread emails every morning using AI and delivers a 60-second audio briefing. Target: VP/Director level managers at 200&ndash;2000 employee companies in US/UK who receive 80&ndash;150 emails daily.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Ecosystem</div>
+                <div class="rb-field-value">&#x1F982; Scorpion &middot; &#x1F981; Lion &middot; &#x1F98E; Chameleon &middot; &#x1F98A; Fox &middot; &#x1F426;&#x200D;&#x2B1B; Crow</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Key Rounds</div>
+                <div class="rb-field-value">R1: Lion proved Google Gemini and Microsoft Copilot already ship email summaries for free &mdash; IT will block a third-party extension before approving it. R2: Cross-platform unification amplified the symptom instead of curing it &mdash; the briefing became a firehose narration. R3: Decision-extraction assumed the wrong bottleneck; VPs know which emails need decisions, the problem is making them. R4: Four pivots and zero remaining differentiation &mdash; each retreat arrived at features incumbents already shipped.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Evolved Idea</div>
+                <div class="rb-field-value">Email thread intelligence API/SDK sold B2B as embedded middleware to existing email clients, CRMs, and project management tools. Not a consumer product &mdash; a middleware engine other products embed at $0.002 per email processed.</div>
+              </div>
+              <div class="rb-field">
+                <div class="rb-field-label">Unfair Advantage</div>
+                <div class="rb-field-value">None survives the battle intact. The original advantage (audio format) died in Round 1. Cross-platform unification died in Round 2. Decision-extraction died in Round 3. This idea has no unfair advantage &mdash; proceed only with a technical co-founder who has shipped enterprise email infrastructure before.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span class="divider-leaf">&#9672;</span></div>
+
   <section class="section" id="animals">
     <div class="container">
       <h2 class="section-title reveal">The Specimens</h2>
@@ -610,7 +1041,9 @@
         <button class="filter-btn" data-filter="product">Product (32)</button>
         <button class="filter-btn" data-filter="code">Code (20)</button>
       </div>
-      <div class="animal-grid" id="animalGrid"></div>
+      <div class="specimen-board reveal">
+        <div class="animal-grid" id="animalGrid"></div>
+      </div>
     </div>
   </section>
 
@@ -651,7 +1084,7 @@
   <section class="section" id="skills">
     <div class="container">
       <h2 class="section-title reveal">Chapters</h2>
-      <div class="section-note reveal">~ four skills, one install, complete lifecycle ~</div>
+      <div class="section-note reveal">~ five skills, one install, complete lifecycle ~</div>
       <div class="skills-grid">
         <div class="skill-card reveal">
           <span class="skill-num">I</span>
@@ -669,13 +1102,20 @@
         </div>
         <div class="skill-card reveal reveal-delay-2">
           <span class="skill-num">III</span>
+          <div class="skill-name">food-chain-pitch</div>
+          <div class="skill-desc">Pitch Battles</div>
+          <p class="skill-detail">12 pitch animals attack your fundraise narrative. Unit economics, due diligence, market sizing, founder-market fit. Investor simulation panel.</p>
+          <div class="skill-trigger">Trigger: <code>food chain pitch: ...</code></div>
+        </div>
+        <div class="skill-card reveal reveal-delay-3">
+          <span class="skill-num">IV</span>
           <div class="skill-name">apex-to-action</div>
           <div class="skill-desc">Battle &rarr; 90-Day Plan</div>
           <p class="skill-detail">Converts battle output into a validated 90-day execution plan. Validation gates. Three phases. Kill list.</p>
           <div class="skill-trigger">Trigger: <code>apex to action: [paste log]</code></div>
         </div>
-        <div class="skill-card reveal reveal-delay-3">
-          <span class="skill-num">IV</span>
+        <div class="skill-card reveal reveal-delay-4">
+          <span class="skill-num">V</span>
           <div class="skill-name">food-chain-monitor</div>
           <div class="skill-desc">Delta Re-Testing</div>
           <p class="skill-detail">After pivots or market changes, tests only new assumptions. 3 animals, 2 rounds max. Under 5 minutes.</p>
@@ -689,24 +1129,102 @@
 
   <section class="install-section reveal" id="install">
     <h2 class="install-title">Begin your field work.</h2>
-    <div class="install-note">zero dependencies, two commands, works everywhere</div>
-    <div class="install-card">
-      <code>claude plugin marketplace add CodedRichy/food-chain-ideation</code>
-      <button class="install-copy" id="copyBtn" onclick="copyInstall()">Copy</button>
+    <div class="install-note">zero dependencies, works everywhere</div>
+
+    <div class="install-tabs" id="installTabs">
+      <button class="install-tab active" data-tab="claude">Claude Code</button>
+      <button class="install-tab" data-tab="cursor">Cursor</button>
+      <button class="install-tab" data-tab="windsurf">Windsurf</button>
+      <button class="install-tab" data-tab="copilot">Copilot</button>
+      <button class="install-tab" data-tab="manual">Manual</button>
     </div>
-    <div class="install-card" style="margin-top: 0.75rem;">
-      <code>claude plugin install food-chain-ideation@food-chain-ideation</code>
-      <button class="install-copy" onclick="copyInstall2()">Copy</button>
+
+    <div class="install-pane active" data-pane="claude">
+      <div class="install-pane-inner">
+        <div class="install-step-label">1. Add from marketplace</div>
+        <div class="install-card">
+          <code>claude plugin marketplace add CodedRichy/food-chain-ideation</code>
+          <button class="install-copy" onclick="copyCmd(this)">Copy</button>
+        </div>
+        <div class="install-step-label">2. Install the skill</div>
+        <div class="install-card">
+          <code>claude plugin install food-chain-ideation@food-chain-ideation</code>
+          <button class="install-copy" onclick="copyCmd(this)">Copy</button>
+        </div>
+        <div class="install-works-with">Works with Claude Code CLI and Claude.ai</div>
+      </div>
     </div>
-    <div class="install-note" style="font-size: 0.9rem; margin-top: 1.2rem; margin-bottom: 0; opacity: 0.7;">Or manually: <code style="font-size: 0.82rem;">git clone</code> the repo and copy <code style="font-size: 0.82rem;">skills/</code> into <code style="font-size: 0.82rem;">.claude/skills/</code></div>
-    <div class="install-envs">
-      <span class="env-pill">Claude Code</span>
-      <span class="env-pill">Claude.ai</span>
-      <span class="env-pill">Cursor</span>
-      <span class="env-pill">Windsurf</span>
-      <span class="env-pill">Copilot</span>
+
+    <div class="install-pane" data-pane="cursor">
+      <div class="install-pane-inner">
+        <div class="install-step-label">Clone into your project</div>
+        <div class="install-card">
+          <code>git clone https://github.com/CodedRichy/food-chain-ideation.git</code>
+          <button class="install-copy" onclick="copyCmd(this)">Copy</button>
+        </div>
+        <div class="install-step-label">Copy skills into .cursor/skills/</div>
+        <div class="install-card">
+          <code>cp -r food-chain-ideation/skills .cursor/skills</code>
+          <button class="install-copy" onclick="copyCmd(this)">Copy</button>
+        </div>
+        <div class="install-manual-hint">Skills load automatically from <code>.cursor/skills/</code> in your project root.</div>
+      </div>
     </div>
+
+    <div class="install-pane" data-pane="windsurf">
+      <div class="install-pane-inner">
+        <div class="install-step-label">Clone into your project</div>
+        <div class="install-card">
+          <code>git clone https://github.com/CodedRichy/food-chain-ideation.git</code>
+          <button class="install-copy" onclick="copyCmd(this)">Copy</button>
+        </div>
+        <div class="install-step-label">Copy skills into .windsurf/skills/</div>
+        <div class="install-card">
+          <code>cp -r food-chain-ideation/skills .windsurf/skills</code>
+          <button class="install-copy" onclick="copyCmd(this)">Copy</button>
+        </div>
+        <div class="install-manual-hint">Skills are markdown-based &mdash; no build step, no dependencies.</div>
+      </div>
+    </div>
+
+    <div class="install-pane" data-pane="copilot">
+      <div class="install-pane-inner">
+        <div class="install-step-label">Clone into your project</div>
+        <div class="install-card">
+          <code>git clone https://github.com/CodedRichy/food-chain-ideation.git</code>
+          <button class="install-copy" onclick="copyCmd(this)">Copy</button>
+        </div>
+        <div class="install-step-label">Copy skills into .github/skills/</div>
+        <div class="install-card">
+          <code>cp -r food-chain-ideation/skills .github/skills</code>
+          <button class="install-copy" onclick="copyCmd(this)">Copy</button>
+        </div>
+        <div class="install-manual-hint">Reference skill files in your Copilot instructions or <code>.github/copilot-instructions.md</code>.</div>
+      </div>
+    </div>
+
+    <div class="install-pane" data-pane="manual">
+      <div class="install-pane-inner">
+        <div class="install-step-label">Clone the repo</div>
+        <div class="install-card">
+          <code>git clone https://github.com/CodedRichy/food-chain-ideation.git</code>
+          <button class="install-copy" onclick="copyCmd(this)">Copy</button>
+        </div>
+        <div class="install-step-label">Copy to your editor's skill directory</div>
+        <div class="install-card">
+          <code>cp -r food-chain-ideation/skills &lt;your-editor&gt;/skills</code>
+          <button class="install-copy" onclick="copyCmd(this)">Copy</button>
+        </div>
+        <div class="install-manual-hint">
+          Pure markdown &mdash; no config, no build step, no dependencies.<br>
+          Common paths: <code>.claude/skills/</code> &middot; <code>.cursor/skills/</code> &middot; <code>.windsurf/skills/</code> &middot; <code>.github/skills/</code><br>
+          On Windows, use <code>copy</code> or <code>xcopy</code> instead of <code>cp -r</code>.
+        </div>
+      </div>
+    </div>
+
     <div class="roadmap">
+      <div class="roadmap-label">Coming soon</div>
       <div class="roadmap-item">
         <div class="coming-soon">In the field</div>
         <div class="skill-name">food-chain-pitch</div>
@@ -754,7 +1272,7 @@
     const BATTLES = [
       { title: 'Viral Content Repurposer', outcome: 'restructured', animals: 5, rounds: 4, mode: 'SUBAGENT', apex: '\u{1F426}\u{200D}\u{2B1B} Crow', original: 'SaaS tool ($29/mo) for solo creators that detects viral content and auto-repurposes across platforms within minutes.', ecosystem: '\u{1FAB1} Tapeworm · \u{1F988} Shark · \u{1F422} Tortoise · \u{1F99F} Mosquito · \u{1F426}\u{200D}\u{2B1B} Crow', evolved: 'Cross-creator structural intelligence platform detecting emerging format patterns 48 hours before public analytics.', uas: 'Anonymized cross-creator performance network detects emerging patterns 48hrs before public analytics.', insight: 'Creators don\'t need speed — they need structural intelligence.' },
       { title: 'MealBot Office Coordinator', outcome: 'killed', animals: 5, rounds: 4, mode: 'FALLBACK', apex: '\u{1F426}\u{200D}\u{2B1B} Crow', original: 'AI meal coordinator for Indian SMEs. Bulk lunch orders from Swiggy/Zomato, preference tracking, budget management.', ecosystem: '\u{1FAB1} Tapeworm · \u{1F402} Ox · \u{1F99D} Raccoon · \u{1F40A} Crocodile · \u{1F426}\u{200D}\u{2B1B} Crow', evolved: 'B2B caterer procurement intelligence for facility managers at 500+ employee companies.', uas: 'Cross-company caterer benchmarking network — every client improves the dataset.', insight: 'Fatal ethnographic assumption: 70-80% of Indian offices above 25 employees use contracted caterers, not Swiggy.' },
-      { title: 'Email Audio Briefing', outcome: 'killed', animals: 5, rounds: 4, mode: 'FALLBACK', apex: '\u{1F426}\u{200D}\u{2B1B} Crow', original: 'Browser extension + app ($9/mo) that summarizes unread emails into a 60-second audio briefing.', ecosystem: '\u{1F982} Scorpion · \u{1F981} Lion · \u{1F98E} Chameleon · \u{1F98A} Fox · \u{1F426}\u{200D}\u{2B1B} Crow', evolved: 'Email thread intelligence API/SDK sold B2B as embedded middleware.', uas: 'None survives. Four pivots, zero remaining differentiation.', insight: '"You started with a megaphone and ended with a magnifying glass, and Google already makes both."' },
+      { title: 'Email Audio Briefing', outcome: 'killed', animals: 5, rounds: 4, mode: 'FALLBACK', apex: '\u{1F426}\u{200D}\u{2B1B} Crow', original: 'Browser extension + app ($9/mo) that summarizes unread emails into a 60-second audio briefing.', ecosystem: '\u{1F982} Scorpion · \u{1F981} Lion · \u{1F98E} Chameleon · \u{1F98A} Fox · \u{1F426}\u{200D}\u{2B1B} Crow', evolved: 'Email thread intelligence API/SDK sold B2B as embedded middleware.', uas: 'None survives. Four pivots, zero remaining differentiation.', insight: '“You started with a megaphone and ended with a magnifying glass, and Google already makes both.”' },
       { title: 'AI Meeting Notetaker', outcome: 'survived', animals: 5, rounds: 4, mode: 'FALLBACK', apex: '\u{1F426}\u{200D}\u{2B1B} Crow', original: 'AI notetaker ($19/mo per team) for SMEs. Joins meetings, extracts action items, auto-assigns in Slack.', ecosystem: '\u{1FAB1} Tapeworm · \u{1F418} Elephant · \u{1F422} Tortoise · \u{1F99F} Mosquito · \u{1F426}\u{200D}\u{2B1B} Crow', evolved: 'Omni-channel action capture and routing platform with cross-tool org graph.', uas: 'Cross-tool organizational graph compounds with every interaction processed.', insight: 'The meeting bot was a feature, not a product. Survival came from owning the cross-tool org graph.' },
     ];
 
@@ -766,15 +1284,15 @@
         { text: '', cls: '' },
         { text: '━━ ROUND 1 ━━', cls: 'round' },
         { text: '\u{1F426}\u{200D}\u{2B1B} Crow attacks...', cls: 'gold' },
-        { text: '"70-80% of target offices use contracted caterers, not Swiggy.', cls: '' },
-        { text: ' MealBot automates a workflow that barely exists."', cls: '' },
+        { text: '“70-80% of target offices use contracted caterers, not Swiggy.', cls: '' },
+        { text: ' MealBot automates a workflow that barely exists.”', cls: '' },
         { text: '☠ Premise is empirically false for majority of ICP', cls: 'red' },
         { text: '❌ Crocodile eliminated · Crow: 94/100', cls: 'dim' },
         { text: '', cls: '' },
         { text: '━━ ROUND 4 (FINAL) ━━', cls: 'round' },
         { text: '\u{1F426}\u{200D}\u{2B1B} Crow attacks...', cls: 'gold' },
-        { text: '"Multi-vendor orchestration already exists — it\'s called Sodexo.', cls: '' },
-        { text: ' You\'re bringing a spreadsheet to a knife fight in a kitchen."', cls: '' },
+        { text: '“Multi-vendor orchestration already exists — it\'s called Sodexo.', cls: '' },
+        { text: ' You\'re bringing a spreadsheet to a knife fight in a kitchen.”', cls: '' },
         { text: '☠ Software cannot disintermediate physical infrastructure', cls: 'red' },
         { text: '', cls: '' },
         { text: '━━ VERDICT: KILLED ━━', cls: 'red verdict' },
@@ -788,15 +1306,15 @@
         { text: '', cls: '' },
         { text: '━━ ROUND 1 ━━', cls: 'round' },
         { text: '\u{1F981} Lion attacks...', cls: 'gold' },
-        { text: '"Google Gemini summarizes Gmail. Copilot does Outlook.', cls: '' },
-        { text: ' IT will block your extension before approving a $9 tool."', cls: '' },
+        { text: '“Google Gemini summarizes Gmail. Copilot does Outlook.', cls: '' },
+        { text: ' IT will block your extension before approving a $9 tool.”', cls: '' },
         { text: '☠ Platform incumbents ship this for free', cls: 'red' },
         { text: '❌ Chameleon eliminated · Lion: 88/100', cls: 'dim' },
         { text: '', cls: '' },
         { text: '━━ ROUND 4 (FINAL) ━━', cls: 'round' },
         { text: '\u{1F426}\u{200D}\u{2B1B} Crow attacks...', cls: 'gold' },
-        { text: '"You started with a megaphone and ended with a magnifying glass,', cls: '' },
-        { text: ' and Google already makes both."', cls: '' },
+        { text: '“You started with a megaphone and ended with a magnifying glass,', cls: '' },
+        { text: ' and Google already makes both.”', cls: '' },
         { text: '☠ Four pivots, zero remaining differentiation', cls: 'red' },
         { text: '', cls: '' },
         { text: '━━ VERDICT: KILLED ━━', cls: 'red verdict' },
@@ -810,15 +1328,15 @@
         { text: '', cls: '' },
         { text: '━━ ROUND 1 ━━', cls: 'round' },
         { text: '\u{1F418} Elephant attacks...', cls: 'gold' },
-        { text: '"Microsoft Copilot and Google Gemini do this for free.', cls: '' },
-        { text: ' Bundled with software your ICP already pays for."', cls: '' },
+        { text: '“Microsoft Copilot and Google Gemini do this for free.', cls: '' },
+        { text: ' Bundled with software your ICP already pays for.”', cls: '' },
         { text: '☠ Bundled feature at zero incremental cost', cls: 'red' },
         { text: '❌ Tortoise eliminated · Elephant: 90/100', cls: 'dim' },
         { text: '\u{1F6E1} Patch: Target Zoom+Slack shops, cross-platform routing', cls: 'green' },
         { text: '', cls: '' },
         { text: '━━ ROUND 4 (FINAL) ━━', cls: 'round' },
         { text: '\u{1F426}\u{200D}\u{2B1B} Crow attacks...', cls: 'gold' },
-        { text: '"Universal action-item extraction is Linear/Asana\'s roadmap."', cls: '' },
+        { text: '“Universal action-item extraction is Linear/Asana\'s roadmap.”', cls: '' },
         { text: 'Neither attack is lethal. Idea absorbs each reframe.', cls: 'green' },
         { text: '', cls: '' },
         { text: '━━ VERDICT: SURVIVED ━━', cls: 'green verdict' },
@@ -827,6 +1345,7 @@
       ]},
     ];
 
+    /* ═══ Typewriter ═══ */
     class TypeWriter {
       constructor(el) { this.el = el; this.stopped = false; }
       stop() { this.stopped = true; }
@@ -839,7 +1358,7 @@
           const div = document.createElement('div');
           div.className = 'term-line ' + (line.cls || '');
           this.el.appendChild(div);
-          if (line.text === '') { div.innerHTML = ' '; }
+          if (line.text === '') { div.innerHTML = ' '; }
           else {
             const speed = line.text.length > 70 ? 12 : line.text.length > 40 ? 18 : 22;
             for (let i = 0; i < line.text.length; i++) {
@@ -856,46 +1375,107 @@
       }
     }
 
-    const heroLines = [
-      { text: '> Idea: "Viral content repurposer for solo creators — $29/mo"', cls: 'gold' },
-      { text: '> ICP: Solo creators, 10k-500k followers, fitness/lifestyle/finance', cls: 'dim' },
-      { text: '> Ecosystem: \u{1FAB1} Tapeworm · \u{1F988} Shark · \u{1F422} Tortoise · \u{1F99F} Mosquito · \u{1F426}\u{200D}\u{2B1B} Crow', cls: 'gold' },
-      { text: '', cls: '' },
-      { text: '━━ ROUND 1 ━━', cls: 'round' },
-      { text: '\u{1F426}\u{200D}\u{2B1B} Crow attacks...', cls: 'gold' },
-      { text: '"Platform algorithms are independent — TikTok peaks over 72hrs,', cls: '' },
-      { text: ' YouTube Shorts over 7 days. Cross-platform speed is meaningless."', cls: '' },
-      { text: '☠ Zero algorithmic advantage on destination platforms', cls: 'red' },
-      { text: '❌ Tortoise eliminated · Crow: 96/100', cls: 'dim' },
-      { text: '\u{1F6E1} Patch: Creator-in-the-loop approval', cls: 'green' },
-      { text: '', cls: '' },
-      { text: '━━ ROUND 4 (FINAL) ━━', cls: 'round' },
-      { text: '\u{1F426}\u{200D}\u{2B1B} Crow attacks...', cls: 'gold' },
-      { text: '"Structural optimization converges. Thousands using same tool', cls: '' },
-      { text: ' → identical posts. Platforms suppress templated uniformity."', cls: '' },
-      { text: '☠ The product self-destructs at scale', cls: 'red' },
-      { text: '', cls: '' },
-      { text: '━━ VERDICT: RESTRUCTURED ━━', cls: 'gold verdict' },
-      { text: 'Apex: \u{1F426}\u{200D}\u{2B1B} Crow (structural convergence detection)', cls: 'gold' },
-      { text: '→ Cross-creator structural intelligence platform', cls: 'gold' },
-      { text: 'UAS: "Network detects patterns 48hrs before public analytics"', cls: 'dim' },
+    /* ═══ Ecosystem Orbit Animation ═══ */
+    const ORBIT_ANIMALS = [
+      { emoji: '\u{1F426}\u{200D}\u{2B1B}', name: 'Crow' },
+      { emoji: '\u{1FAB1}', name: 'Tapeworm' },
+      { emoji: '\u{1F988}', name: 'Shark' },
+      { emoji: '\u{1F99F}', name: 'Mosquito' },
+      { emoji: '\u{1F422}', name: 'Tortoise' },
     ];
 
-    const heroEl = document.getElementById('heroTerminal');
-    const heroTyper = new TypeWriter(heroEl);
-    function playHero() {
-      document.getElementById('heroReplay').style.display = 'none';
-      heroTyper.play(heroLines).then(() => {
-        document.getElementById('heroReplay').style.display = 'block';
+    const vizEl = document.getElementById('ecosystemViz');
+    const ideaEl = document.getElementById('orbitIdea');
+    const statusEl = document.getElementById('orbitStatus');
+    const orbitNodes = [];
+
+    function positionOrbit() {
+      const w = vizEl.offsetWidth;
+      const cx = w / 2, cy = w / 2;
+      const r = w * 0.4;
+      ORBIT_ANIMALS.forEach((a, i) => {
+        const angle = (i / ORBIT_ANIMALS.length) * Math.PI * 2 - Math.PI / 2;
+        const x = Math.cos(angle) * r;
+        const y = Math.sin(angle) * r;
+        const node = orbitNodes[i];
+        node.style.setProperty('--tx', x + 'px');
+        node.style.setProperty('--ty', y + 'px');
+        node.style.left = (cx - 26) + 'px';
+        node.style.top = (cy - 26) + 'px';
+        node.style.transform = `translate(${x}px, ${y}px)`;
       });
     }
 
+    ORBIT_ANIMALS.forEach(a => {
+      const node = document.createElement('div');
+      node.className = 'orbit-animal';
+      node.textContent = a.emoji;
+      node.dataset.name = a.name;
+      vizEl.appendChild(node);
+      orbitNodes.push(node);
+    });
+    positionOrbit();
+    window.addEventListener('resize', positionOrbit);
+
+    const ORBIT_SCRIPT = [
+      { delay: 1200, action: 'status', text: 'Ecosystem assembled...' },
+      { delay: 2000, action: 'attack', animal: 0, text: 'Crow strikes — "each layer is replicable"' },
+      { delay: 2500, action: 'attack', animal: 2, text: 'Shark strikes — "FAANG ships this as a checkbox"' },
+      { delay: 2500, action: 'eliminate', animal: 4, text: '❌ Tortoise eliminated' },
+      { delay: 2000, action: 'attack', animal: 1, text: 'Tapeworm strikes — "API dependency is fatal"' },
+      { delay: 2500, action: 'eliminate', animal: 3, text: '❌ Mosquito eliminated' },
+      { delay: 2000, action: 'attack', animal: 0, text: 'Crow — final strike' },
+      { delay: 2500, action: 'eliminate', animal: 2, text: '❌ Shark eliminated' },
+      { delay: 2000, action: 'eliminate', animal: 1, text: '❌ Tapeworm eliminated' },
+      { delay: 2000, action: 'apex', animal: 0, text: '\u{1F451} APEX: Crow — unkillable' },
+      { delay: 3000, action: 'reset' },
+    ];
+
+    let orbitRunning = false;
+    async function playOrbit() {
+      if (orbitRunning) return;
+      orbitRunning = true;
+      orbitNodes.forEach(n => { n.classList.remove('eliminated', 'attacking', 'apex'); });
+      statusEl.classList.remove('visible');
+      positionOrbit();
+
+      for (const step of ORBIT_SCRIPT) {
+        await new Promise(r => setTimeout(r, step.delay));
+        if (step.action === 'status') {
+          statusEl.textContent = step.text;
+          statusEl.classList.add('visible');
+        } else if (step.action === 'attack') {
+          statusEl.textContent = step.text;
+          statusEl.classList.add('visible');
+          orbitNodes[step.animal].classList.add('attacking');
+          ideaEl.classList.add('hit');
+          setTimeout(() => {
+            orbitNodes[step.animal].classList.remove('attacking');
+            ideaEl.classList.remove('hit');
+          }, 600);
+        } else if (step.action === 'eliminate') {
+          statusEl.textContent = step.text;
+          orbitNodes[step.animal].classList.add('eliminated');
+        } else if (step.action === 'apex') {
+          statusEl.textContent = step.text;
+          orbitNodes[step.animal].classList.add('apex');
+        } else if (step.action === 'reset') {
+          orbitRunning = false;
+          setTimeout(playOrbit, 2000);
+        }
+      }
+    }
+
+    /* ═══ Animal Grid ═══ */
     const animalGrid = document.getElementById('animalGrid');
+    const rotations = [-1.2, 0.8, -0.5, 1.1, -0.9, 0.4, -1.5, 0.7, -0.3, 1.3, -0.6, 0.9, -1.0, 0.5];
     ANIMALS.forEach((a, i) => {
       const card = document.createElement('div');
       card.className = 'animal-card reveal';
       card.dataset.cat = a.cat;
+      card.style.transform = `rotate(${rotations[i % rotations.length]}deg)`;
       card.innerHTML = `
+        <div class="animal-pin"></div>
         <span class="specimen-num">#${String(i + 1).padStart(3, '0')}</span>
         <div class="animal-head">
           <span class="animal-emoji">${a.emoji}</span>
@@ -918,6 +1498,7 @@
       document.querySelectorAll('.animal-card').forEach(c => c.classList.toggle('hidden', f !== 'all' && c.dataset.cat !== f));
     });
 
+    /* ═══ Battles ═══ */
     const battleGrid = document.getElementById('battleGrid');
     BATTLES.forEach(b => {
       const card = document.createElement('div');
@@ -942,6 +1523,7 @@
       battleGrid.appendChild(card);
     });
 
+    /* ═══ Demo ═══ */
     const demoOpts = document.getElementById('demoOptions');
     const demoEl = document.getElementById('demoTerminal');
     let demoTyper = new TypeWriter(demoEl);
@@ -956,6 +1538,7 @@
       demoOpts.appendChild(btn);
     });
 
+    /* ═══ Scroll / Nav / Reveal ═══ */
     const scrollProgress = document.getElementById('scrollProgress');
     window.addEventListener('scroll', () => {
       const h = document.documentElement.scrollHeight - window.innerHeight;
@@ -990,17 +1573,30 @@
     }, { threshold: 0.5 });
     document.querySelectorAll('.stat-number').forEach(el => counterObs.observe(el));
 
-    function copyInstall() {
-      navigator.clipboard.writeText('claude plugin marketplace add CodedRichy/food-chain-ideation');
-      const b = document.getElementById('copyBtn');
-      b.textContent = 'Copied!'; setTimeout(() => b.textContent = 'Copy', 1500);
-    }
-    function copyInstall2() {
-      navigator.clipboard.writeText('claude plugin install food-chain-ideation@food-chain-ideation');
-      event.target.textContent = 'Copied!'; setTimeout(() => event.target.textContent = 'Copy', 1500);
+    /* ═══ Install Tabs ═══ */
+    function copyCmd(btn) {
+      const code = btn.parentElement.querySelector('code');
+      navigator.clipboard.writeText(code.textContent);
+      btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1500);
     }
 
-    setTimeout(playHero, 600);
+    document.querySelectorAll('.install-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.install-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.install-pane').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.install-pane[data-pane="${tab.dataset.tab}"]`).classList.add('active');
+      });
+    });
+
+    /* ═══ Real Battles Accordion ═══ */
+    function toggleRbCard(btn) {
+      const card = btn.closest('.rb-card');
+      card.classList.toggle('rb-open');
+    }
+
+    /* ═══ Start ═══ */
+    setTimeout(playOrbit, 800);
   </script>
 </body>
 </html>

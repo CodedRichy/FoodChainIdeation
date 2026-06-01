@@ -159,15 +159,19 @@ Select from `references/animal-library.md`. Use the Quick Selection Guide first.
 **Execution:** [SUBAGENT / FALLBACK] — [reason]
 ```
 
+### Selection Reasoning
+
+After the ecosystem table, explain 2-3 key selection decisions:
+`Selected: [Animal] over [Rejected] — [why this vector is more specific]`
+This lets the user challenge selections before the battle starts.
+
 ---
 
 ## Step 2 — Battle Rounds
 
 Repeat until one animal remains.
 
-### Execution Mode Detection
-
-Auto-detect at battle start. Do not ask the user.
+### Execution Mode Detection — Auto-detect at battle start. Do not ask the user.
 
 **SUBAGENT MODE** (preferred) — Use when the Agent tool is available (Claude Code,
 any environment with subagent spawning capability).
@@ -187,31 +191,28 @@ Each animal is spawned as an independent subagent. The subagent receives ONLY:
   Kill Shot (one sentence)."
 
 Subagents run in parallel per round. God Agent collects all attacks, scores them,
-eliminates the weakest, applies absorption and patching, then spawns the next round
-with the patched idea.
+eliminates the weakest, applies absorption and patching, then spawns the next round.
 
 **Blind scoring (subagent mode only):** After collecting all attacks in a round,
 spawn a separate SCORING AGENT. It receives all attacks anonymized as "Attacker A",
 "Attacker B", etc. — no animal names, no emoji, no behavioral DNA context. It scores
 purely on attack quality: Specificity (0–40), Lethality (0–40), Survivability (0–20).
-Returns rankings. God Agent maps anonymous scores back to animals and applies
-elimination. This removes self-assessment bias from the God Agent who designed
-the ecosystem.
+Returns rankings plus a 1-line justification per dimension (e.g.,
+`Specificity: 35/40 — "Names exact API endpoint and rate limit"`), rendered as a
+footnote. God Agent maps scores back to animals and eliminates. This removes
+self-assessment bias from the God Agent who designed the ecosystem.
 
 **FALLBACK MODE** — Use when subagents are not available (Claude.ai, Cursor,
-Windsurf, Copilot, single-context environments).
+Windsurf, Copilot, single-context environments). Role-play each animal sequentially.
+Before each attack, restate: "I am now [Animal]. I know nothing about any other
+attack in this round." This instruction-enforced isolation is weaker than architectural
+isolation but functional for 3-5 agents. Degrades above 5 agents in fallback.
 
-Role-play each animal sequentially within the same context. Before each animal's
-attack, explicitly restate: "I am now [Animal]. I know nothing about any other
-attack in this round. I know only the idea and its patches." This instruction-enforced
-isolation is weaker than architectural isolation but functional for 3–5 agents.
-Quality degrades noticeably above 5 agents in fallback mode.
-
-**State which mode is active at battle start:**
-```
-Execution: SUBAGENT MODE [or] FALLBACK MODE
-Reason: [Agent tool available / Not available — single-context environment]
-```
+**DATA MODE** — Auto-detect alongside execution mode. When WebSearch/WebFetch are
+available, subagents search for current competitor data, funding rounds, and pricing
+before attacking; kill shots cite current data. `Data: LIVE` or `Data: STATIC` (no
+web tools — no degradation of core logic).
+**State at battle start:** `Execution: SUBAGENT [or] FALLBACK | Data: LIVE [or] STATIC`
 
 ---
 
@@ -220,23 +221,18 @@ Reason: [Agent tool available / Not available — single-context environment]
 Each animal has zero awareness of what other animals said. It knows only: the
 original idea plus all patches accumulated to that point. This is the mechanism
 that produces genuine adversarial pressure.
-
 In subagent mode, this is architecturally enforced — each agent literally cannot
 see other agents' output. In fallback mode, this is instruction-enforced. If
-role-lock is breaking down in fallback mode (attacks feel aware of each other),
-restate the active animal's role explicitly at the top of its section and restart
-the attack.
+role-lock is breaking down (attacks feel aware of each other), restate the active
+animal's role explicitly and restart the attack.
 
 ### Output Rendering
 
-In subagent mode, animals execute in parallel but the God Agent MUST collect all
-subagent responses before printing anything. Never stream partial results. Wait
-for the full round to complete, then render the entire round as one block.
-
-**Compression rule:** Subagents produce full 120–150 word attacks (needed for scoring
+In subagent mode, the God Agent MUST collect all subagent responses before printing
+anything. Never stream partial results. Render the entire round as one block.
+**Compression rule:** Subagents produce full 120-150 word attacks (needed for scoring
 quality). The God Agent renders only the 2-sentence summary and kill shot in the round
-table. Full attack text is used internally for blind scoring but NOT displayed. This
-keeps rounds scannable while preserving attack depth for the scoring agent.
+table. Full attack text is used internally for blind scoring but NOT displayed.
 
 ### Round structure
 
@@ -248,6 +244,8 @@ keeps rounds scannable while preserving attack depth for the scoring agent.
 | [emoji] | [Animal] | [2-sentence summary] | [kill shot sentence] |
 | [emoji] | [Animal] | [2-sentence summary] | [kill shot sentence] |
 | ... | ... | ... | ... |
+
+**Kill shot confidence tags:** **CONFIRMED** (verifiable data) | **PROBABLE** (strong structural signal) | **SPECULATIVE** (plausible, needs validation). Format: `Kill Shot [CONFIRMED]: "..."`
 
 ### Scores
 
@@ -262,11 +260,17 @@ keeps rounds scannable while preserving attack depth for the scoring agent.
 > **Idea patch:** [concrete change to survive this round]
 ```
 
+### Founder Defense (Optional)
+
+After collecting attacks but before scoring, spawn a **Founder Agent** that receives ALL
+attacks (breaks role-lock intentionally), produces 1 defense per attack (2 sentences max).
+Scoring agent scores **residual lethality after defense**. Strong defense = manageable;
+weak defense = full lethality stands. Active in subagent mode; skipped in fallback.
+
 **Early termination rule:** If an idea survives two consecutive rounds with only
-cosmetic patches (naming, surface pricing changes, minor UX adjustments), declare
-it structurally sound early. Do not manufacture rounds. State: "This idea has
-survived structural pressure. Remaining attacks are unlikely to find fatal flaws."
-Then proceed to the apex output.
+cosmetic patches, declare it structurally sound early. Do not manufacture rounds.
+State: "This idea has survived structural pressure. Remaining attacks are unlikely
+to find fatal flaws." Then proceed to the apex output.
 
 ---
 
@@ -307,6 +311,15 @@ The audience agent answers five questions, not three:
 4. **What's confusing?** — the part of the pitch that doesn't land on first read
 5. **Who else would you tell about this?** — zero people (bad sign), or specific
    role/community (distribution signal)
+
+### Audience Panel (3 ICPs)
+
+Spawn 3 audience agents (or 3 sequential in fallback): **Early Adopter** (tech-forward,
+low price sensitivity, high churn risk) | **Mainstream Buyer** (needs proof, references,
+case studies) | **Skeptical Enterprise** (procurement, security review, legal approval).
+Each answers the same 5 questions. Divergence is signal: all agree = strong positioning;
+adopter yes / others no = distribution problem; enterprise no = not enterprise-ready.
+Subagent: parallel. Fallback: sequential.
 
 ### Confidence Calibration
 
@@ -396,17 +409,11 @@ that survived the full ecosystem. One focused paragraph.]
 
 ### Audience Check
 
-**ICP:** [persona — role, context, constraints, trigger]
-**Confidence:** [HIGH / MEDIUM / LOW]
-
-| | |
-|---|---|
-| **Verdict** | [YES / MAYBE / NO] |
-| **Would pay because** | [one sentence] |
-| **Immediate yes if** | [one sentence] |
-| **Immediate no if** | [one sentence] |
-| **What's confusing** | [one sentence — part of pitch that doesn't land] |
-| **Who else to tell** | [specific role/community, or "nobody" — distribution signal] |
+| Persona | Verdict | Pay? | Yes trigger | No trigger | Confusing | Tell who? | Confidence |
+|---|---|---|---|---|---|---|---|
+| Early Adopter | [Y/M/N] | [1 line] | [1 line] | [1 line] | [1 line] | [1 line] | [H/M/L] |
+| Mainstream Buyer | [Y/M/N] | [1 line] | [1 line] | [1 line] | [1 line] | [1 line] | [H/M/L] |
+| Skeptical Enterprise | [Y/M/N] | [1 line] | [1 line] | [1 line] | [1 line] | [1 line] | [H/M/L] |
 
 ---
 

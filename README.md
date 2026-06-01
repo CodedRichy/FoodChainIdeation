@@ -79,7 +79,7 @@ A tool that only kills ideas is a pessimist. Food Chain produces all three:
 
 ## The animals
 
-52 animals across two libraries. Each has hardcoded behavioral DNA —
+64 animals across three libraries. Each has hardcoded behavioral DNA —
 the God Agent selects, never invents.
 
 **🐦‍⬛ Crow** — Forensic. Finds the structural assumption three levels deep
@@ -99,22 +99,24 @@ as a Tuesday sprint toggle.
 **🦂 Scorpion** — Compliance. GDPR. SOC 2. The thing you forgot until
 a customer's legal team sends the questionnaire.
 
-32 product animals. 20 code-specific animals. Full libraries in
-[`animal-library.md`](skills/food-chain-ideation/references/animal-library.md) and
-[`code-animal-library.md`](skills/food-chain-code/references/code-animal-library.md).
+32 product animals. 20 code-specific animals. 12 pitch animals. Full libraries in
+[`animal-library.md`](skills/food-chain-ideation/references/animal-library.md),
+[`code-animal-library.md`](skills/food-chain-code/references/code-animal-library.md), and
+[`pitch-animal-library.md`](skills/food-chain-pitch/references/pitch-animal-library.md).
 
 ---
 
-## Four skills, one install
+## Five skills, one install
 
 | Skill | Purpose |
 |---|---|
 | **food-chain-ideation** | Stress-test product ideas — 32 animals, elimination rounds, blind scoring |
 | **food-chain-code** | Stress-test architecture decisions before writing code — 20 code animals |
+| **food-chain-pitch** | Stress-test investor pitches — 12 pitch animals, investor simulation panel |
 | **apex-to-action** | Turn battle output into a 90-day execution plan with validation gates |
 | **food-chain-monitor** | Re-test after pivots or market shifts — 3 animals, 2 rounds, fast verdict |
 
-**Stress-test → Execute → Monitor → Re-test.**
+**Stress-test → Pitch → Execute → Monitor → Re-test.**
 
 ---
 
@@ -154,6 +156,8 @@ food chain my idea: [your idea]
 what kills this: [your product]
 
 food chain code: [your architecture decision]
+
+food chain pitch: [your pitch or deck summary]
 
 apex to action: [paste your battle log]
 
@@ -200,6 +204,10 @@ skills/
 │   ├── SKILL.md                    ← architecture decision battles
 │   └── references/
 │       └── code-animal-library.md  ← 20 code-specific animals
+├── food-chain-pitch/
+│   ├── SKILL.md                    ← investor pitch battles
+│   └── references/
+│       └── pitch-animal-library.md ← 12 pitch-specific animals
 ├── apex-to-action/
 │   └── SKILL.md                    ← battle output → 90-day plan
 └── food-chain-monitor/
@@ -219,6 +227,17 @@ community makes every existing installation better retroactively.
 
 <details>
 <summary>Changelog</summary>
+
+**v2.1.0**
+- food-chain-pitch — investor pitch stress-tester with 12 pitch-specific animals
+- Real-time data mode — agents search for current market data when web tools available
+- Kill shot confidence tags — CONFIRMED / PROBABLE / SPECULATIVE on every attack
+- Scoring reasoning — 1-line justification per scoring dimension
+- Audience panel — 3 ICP simulations replace single audience agent
+- Founder defense agent — active defense between attacks and scoring
+- Animal selection reasoning — transparent selection logic in ecosystem design
+- Battle gallery on website — 4 real battle transcripts browseable
+- Spec alignment — all skills use when_to_use + argument-hint frontmatter
 
 **v2.0.0**
 - Subagent mode — architecturally enforced role-lock via independent agents

@@ -1,14 +1,16 @@
 ---
 name: apex-to-action
-version: 2.0.0
+version: 2.1.0
 description: >
   Converts food chain battle output into a 90-day execution plan. Takes the Evolved Idea,
   Unfair Advantage Statement, and Battle Log from any food chain battle and produces
   what to build first, what to validate before building, what to never build, and weekly
   milestones. The natural next step after any food chain battle. Works in Claude.ai,
-  Claude Code, Cursor, Windsurf, Copilot with no dependencies. Trigger on: "apex to action",
-  "what do I build first", "turn this battle into a plan", "90 day plan from this",
-  "what's my next move", or when a food chain battle just completed.
+  Claude Code, Cursor, Windsurf, Copilot with no dependencies.
+when_to_use: >
+  "apex to action", "what do I build first", "turn this battle into a plan",
+  "90 day plan from this", "what's my next move"
+argument-hint: "[paste your battle log]"
 ---
 
 # Apex to Action
@@ -39,14 +41,17 @@ If the user pastes a Battle Log, parse every field: original idea, evolved idea,
 
 Parse the battle output and produce:
 
-```
-BATTLE DEBRIEF
-Original idea: [extracted from battle output]
-Evolved idea: [extracted — this is what we're planning for]
-Apex predator: [what survived and why it won]
-Key patches applied: [list of adaptations made during battle]
-Killed features: [features that lost every round — these go on the kill list]
-Unfair advantage: [extracted — this drives Phase 2 build priority]
+```markdown
+## Battle Debrief
+
+| Field | Value |
+|---|---|
+| **Original idea** | [extracted from battle output] |
+| **Evolved idea** | [extracted — this is what we're planning for] |
+| **Apex predator** | [what survived and why it won] |
+| **Key patches applied** | [list of adaptations made during battle] |
+| **Killed features** | [features that lost every round — these go on the kill list] |
+| **Unfair advantage** | [extracted — this drives Phase 2 build priority] |
 ```
 
 Extract killed features from fallen animals' insights. Each fallen animal likely attacked a weakness — the patches that stuck are strengths, the features that kept failing are dead.
@@ -55,11 +60,14 @@ Extract killed features from fallen animals' insights. Each fallen animal likely
 
 Things that must be proven TRUE before writing any code. Each gate is a specific, binary test.
 
-```
-VALIDATION GATES (prove these before writing code)
-Gate 1: [Specific test] -> Pass if: [measurable criterion] -> Method: [how to run the test]
-Gate 2: [Specific test] -> Pass if: [measurable criterion] -> Method: [how to run the test]
-Gate 3: [Specific test] -> Pass if: [measurable criterion] -> Method: [how to run the test]
+```markdown
+## Validation Gates — prove these before writing code
+
+| Gate | Test | Pass if | Method |
+|---|---|---|---|
+| 1 | [specific test] | [measurable criterion] | [how to run the test] |
+| 2 | [specific test] | [measurable criterion] | [how to run the test] |
+| 3 | [specific test] | [measurable criterion] | [how to run the test] |
 ```
 
 Rules:
@@ -73,21 +81,33 @@ Rules:
 
 Three phases. Each ends with a decision gate that determines whether to continue.
 
-```
-PHASE 1: VALIDATE (Days 1-30)
-Week 1-2: [specific validation activity tied to Gates 1-2]
-Week 3-4: [specific validation activity tied to Gates 3-5]
-Decision gate: [what must be true to proceed to Phase 2]
+```markdown
+### Phase 1: Validate (Days 1-30)
 
-PHASE 2: BUILD CORE (Days 31-60)
-Week 5-6: [build the ONE feature that proves the unfair advantage — nothing else]
-Week 7-8: [ship to real users, iterate based on actual usage data]
-Decision gate: [what must be true to proceed to Phase 3]
+| Week | Action |
+|---|---|
+| 1-2 | [specific validation activity tied to Gates 1-2] |
+| 3-4 | [specific validation activity tied to Gates 3-5] |
 
-PHASE 3: EXPAND (Days 61-90)
-Week 9-10: [second feature, chosen based on Phase 2 usage data]
-Week 11-12: [one distribution or growth experiment]
-Decision gate: [what must be true to continue investing past 90 days]
+**Decision gate:** [what must be true to proceed to Phase 2]
+
+### Phase 2: Build Core (Days 31-60)
+
+| Week | Action |
+|---|---|
+| 5-6 | [build the ONE feature that proves the unfair advantage — nothing else] |
+| 7-8 | [ship to real users, iterate based on actual usage data] |
+
+**Decision gate:** [what must be true to proceed to Phase 3]
+
+### Phase 3: Expand (Days 61-90)
+
+| Week | Action |
+|---|---|
+| 9-10 | [second feature, chosen based on Phase 2 usage data] |
+| 11-12 | [one distribution or growth experiment] |
+
+**Decision gate:** [what must be true to continue investing past 90 days]
 ```
 
 Rules:
@@ -100,11 +120,14 @@ Rules:
 
 Features that must never be built. Sourced from battle output.
 
-```
-NEVER BUILD
-- [Feature] — killed by [animal in battle], reason: [one line from battle insight]
-- [Feature] — no structural advantage, would dilute unfair advantage
-- [Feature] — user asked about it but battle proved it unnecessary
+```markdown
+## Never Build
+
+| Feature | Killed by | Reason |
+|---|---|---|
+| [feature] | [animal in battle] | [one line from battle insight] |
+| [feature] | — | no structural advantage, would dilute unfair advantage |
+| [feature] | — | user asked about it but battle proved it unnecessary |
 ```
 
 Rules:
@@ -115,13 +138,17 @@ Rules:
 
 Compressed block the user can paste into future sessions to resume planning.
 
-```
-ACTION LOG — paste this into future sessions
-[Date] | Plan based on battle from [battle date if available]
-Phase: [1/2/3] | Status: [NOT STARTED / IN PROGRESS / GATE PASSED / BLOCKED]
-Completed: [what's done]
-Blocked on: [what's stuck, if anything]
-Next: [the single immediate next action]
+```markdown
+## Action Log
+
+Copy this block into future sessions to resume planning.
+
+> **Date:** [date]
+> **Battle date:** [battle date if available]
+> **Phase:** [1/2/3] | **Status:** [NOT STARTED / IN PROGRESS / GATE PASSED / BLOCKED]
+> **Completed:** [what's done]
+> **Blocked on:** [what's stuck, if anything]
+> **Next:** [the single immediate next action]
 ```
 
 When a user pastes an Action Log back, pick up from where they left off. Update the phase, check gate status, and give the next concrete action.

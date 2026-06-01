@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "food-chain-ideation",
-  "description": "Adversarial stress-testing suite for product ideas, architecture decisions, and execution plans. Live elimination battles with animal agents from behavioral DNA libraries.",
+  "description": "Adversarial stress-testing suite for product ideas, architecture decisions, investor pitches, and execution plans. Live elimination battles with 64 animal agents from behavioral DNA libraries.",
   "owner": {
     "name": "Rishi Praseeth Krishnan",
     "url": "https://github.com/CodedRichy"
@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "food-chain-ideation",
-      "description": "Adversarial product and architecture stress-testing suite with four skills: idea battles, code battles, apex-to-action plans, and ongoing monitoring.",
+      "description": "Adversarial stress-testing suite with five skills: idea battles, code battles, pitch battles, apex-to-action plans, and ongoing monitoring.",
       "source": "./",
       "category": "productivity"
     }

@@ -1,14 +1,16 @@
 ---
 name: food-chain-code
-version: 2.0.0
+version: 2.1.0
 description: >
   Adversarial architecture stress-tester. Selects attacker agents from a code-specific
   behavioral DNA library matched to the technical decision. Each attacks under strict
   role-lock. Weakest eliminated, survivor absorbs and evolves. Tests architecture
   decisions before a line of code is written. Works in Claude.ai, Claude Code, Cursor,
-  Windsurf, Copilot with no dependencies. Trigger on: "food chain code", "stress test
-  this architecture", "what kills this design", "pressure test this stack", "tear apart
-  this schema", "attack this API design".
+  Windsurf, Copilot with no dependencies.
+when_to_use: >
+  "food chain code", "stress test this architecture", "what kills this design",
+  "pressure test this stack", "tear apart this schema", "attack this API design"
+argument-hint: "[your architecture decision]"
 ---
 
 # Food Chain Code
@@ -99,13 +101,17 @@ Select from `references/code-animal-library.md`. Use the Quick Selection Guide f
 
 **Announce the ecosystem with attack vectors visible:**
 
-```
-ECOSYSTEM
-[emoji] [Animal]  — [Role] — [Attack vector in one line]
-[emoji] [Animal]  — [Role] — [Attack vector in one line]
-[...]
+```markdown
+## Ecosystem
 
-God Agent hypothesis: [Restate the kill hypothesis from Step 0]
+| | Animal | Role | Attack Vector |
+|---|---|---|---|
+| [emoji] | [Animal] | [Role] | [one line] |
+| [emoji] | [Animal] | [Role] | [one line] |
+| ... | ... | ... | ... |
+
+**God Agent hypothesis:** [Restate the kill hypothesis from Step 0]
+**Execution:** [SUBAGENT / FALLBACK] — [reason]
 ```
 
 ---
@@ -176,41 +182,37 @@ the attack.
 
 ### Output Rendering
 
-In subagent mode, animals execute in parallel but the God Agent MUST render all
-output sequentially in a single clean block. Collect all subagent responses before
-printing anything. Never stream partial subagent results interleaved with other
-output — wait for the full round to complete, then render the entire round structure
-as one formatted block. This prevents garbled or interleaved output in CLI environments.
+In subagent mode, animals execute in parallel but the God Agent MUST collect all
+subagent responses before printing anything. Never stream partial results. Wait
+for the full round to complete, then render the entire round as one block.
+
+**Compression rule:** Subagents produce full 120-150 word attacks (needed for scoring
+quality). The God Agent renders only the 2-sentence summary and kill shot in the round
+table. Full attack text is used internally for blind scoring but NOT displayed. This
+keeps rounds scannable while preserving attack depth for the scoring agent.
 
 ### Round structure
 
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-ROUND [N]  ·  [X] animals remaining
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```markdown
+## Round [N] — [X] animals remaining
 
-[emoji] [ANIMAL] — [Role]
-[Attack in full persona. Concrete. Specific to this architecture.
-No generic risk language. 120–150 words maximum.]
-Kill Shot: [One sentence. If true, kills the architecture entirely.]
+| | Animal | Attack Summary | Kill Shot |
+|---|---|---|---|
+| [emoji] | [Animal] | [2-sentence summary] | [kill shot sentence] |
+| [emoji] | [Animal] | [2-sentence summary] | [kill shot sentence] |
+| ... | ... | ... | ... |
 
-[Repeat for each surviving animal]
+### Scores
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SCORING
-[emoji] [Animal]  ████████░░  [score]  [one-line verdict]
-[...]
+| | Animal | Spec | Leth | Surv | Total | Verdict |
+|---|---|---|---|---|---|---|
+| [emoji] | [Animal] | /40 | /40 | /20 | **/100** | [one-line] |
+| ... | ... | ... | ... | ... | ... | ... |
 
-Specificity (0–40)  ·  Lethality (0–40)  ·  Survivability (0–20)
-Lowest eliminated. Highest consumes.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-[emoji] [EATER] consumes [emoji] [EATEN]
-
-Absorbed:   [Single sharpest insight transferred to survivor]
-Evolution:  [How the survivor's attack grows stronger — 2 sentences]
-Arch patch: [Concrete architectural change required to survive this round]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+> **Eliminated:** [emoji] [Animal]
+> **Consumed by:** [emoji] [Animal]
+> **Absorbed:** [single sharpest insight]
+> **Arch patch:** [concrete architectural change to survive this round]
 ```
 
 **Early termination rule:** If an architecture survives two consecutive rounds with
@@ -223,61 +225,76 @@ find fatal flaws." Then proceed to the apex output.
 
 ## Step 3 — Apex Output
 
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-APEX PREDATOR
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[emoji] [Animal]
-[Why this agent was unkillable — what made its attack survive every round]
+```markdown
+## Apex Predator — [emoji] [Animal]
 
-God Agent hypothesis verdict: [Was the pre-battle hypothesis confirmed or
-was something unexpected the true killer? One sentence.]
+[Why unkillable — 2 sentences max]
 
-THE FALLEN
-[emoji] [Animal] — [Insight contributed before elimination]
-[...]
+**Hypothesis verdict:** [confirmed or surprised? One sentence.]
 
-THE EVOLVED ARCHITECTURE
+### Architecture Evolution
+
+| Round | Patch | Trigger |
+|---|---|---|
+| R1 | [concrete change] | [which threat forced it] |
+| R2 | [concrete change] | [which threat forced it] |
+| ... | ... | ... |
+
+### The Fallen
+
+| | Animal | Round | Key Contribution |
+|---|---|---|---|
+| [emoji] | [Animal] | R[N] | [insight contributed before elimination] |
+| ... | ... | ... | ... |
+
+### The Evolved Architecture
+
 [Battle-hardened final version incorporating every round's patch.
 Specific and concrete — stack, boundaries, data flow, failure modes addressed.
-This is the architecture that survived the full ecosystem.]
+This is the architecture that survived the full ecosystem. One focused paragraph.]
 
-TECHNICAL DEBT STATEMENT
-[One sentence. The structural debt this architecture will inevitably
-accumulate and the approximate timeline before it demands repayment.
-Not a risk register — a prediction. An engineer reading this in 18 months
-should recognize the situation they are now living in.]
+### Technical Debt Statement
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-BATTLE QUALITY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Execution mode:          [SUBAGENT / FALLBACK]
-Role-lock integrity:     ████████░░  [X]/10  [one line — did attacks stay independent?]
-Animal specificity:      ████████░░  [X]/10  [one line — were roles specific to this architecture?]
-Kill Shot lethality:     ████████░░  [X]/10  [one line — were kill shots concrete and testable?]
+> [One sentence. The structural debt this architecture will inevitably
+> accumulate and the approximate timeline before it demands repayment.
+> Not a risk register — a prediction. An engineer reading this in 18 months
+> should recognize the situation they are now living in.]
 
-Overall: [HIGH / MEDIUM / DEGRADED]
+---
 
-[If DEGRADED: specific reason and what to do — re-run with tighter roles,
-reduce agent count, or sharpen the architecture description first.]
+### Battle Quality
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-NEXT MOVE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Validate before building: [One specific thing to prototype or load-test first]
-Build first:              [The one component that proves the architecture holds]
-Never build:              [The component that sounds important but lost every round]
+| Dimension | Score | Note |
+|---|---|---|
+| Execution mode | [SUBAGENT / FALLBACK] | |
+| Role-lock integrity | [X]/10 | [one line] |
+| Animal specificity | [X]/10 | [one line] |
+| Kill shot lethality | [X]/10 | [one line] |
+| **Overall** | **[HIGH / MEDIUM / DEGRADED]** | |
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-BATTLE LOG — for future sessions
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[Date] | [Original architecture in one sentence] | [Final evolved architecture in one sentence]
-Apex: [animal] | TDS: [technical debt statement]
-Key patches: [3 bullet points of what changed during the battle]
+---
 
-[Paste this block into your next food chain code session to build on prior battles
-rather than starting from zero.]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+### Next Move
+
+- **Validate first:** [one specific thing to prototype or load-test first]
+- **Build first:** [the one component that proves the architecture holds]
+- **Never build:** [the component that sounds important but lost every round]
+
+---
+
+### Battle Log
+
+Copy this block into your next food chain code session to build on prior battles.
+
+> **Date:** [date]
+> **Original:** [one sentence]
+> **Evolved:** [one sentence]
+> **Apex:** [animal] | **TDS:** [technical debt statement]
+> **Key patches:** [3 bullets]
+
+**Companion skills:**
+- `apex to action` — turn this into a 90-day execution plan
+- `food chain monitor` — re-test after changes or pivots
 ```
 
 ---

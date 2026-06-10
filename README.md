@@ -108,8 +108,8 @@ a customer's legal team sends the questionnaire.
 
 | Skill | Purpose |
 |---|---|
-| **food-chain-ideation** | Stress-test product ideas — 32 animals, elimination rounds, blind scoring |
-| **food-chain-code** | Stress-test architecture decisions before writing code — 20 code animals |
+| **food-chain-ideation** | Stress-test product ideas — 35 animals, elimination rounds, blind scoring |
+| **food-chain-code** | Stress-test architecture decisions before writing code — 21 code animals |
 | **food-chain-pitch** | Stress-test investor pitches — 12 pitch animals, investor simulation panel |
 | **apex-to-action** | Turn battle output into a 90-day execution plan with validation gates |
 | **food-chain-monitor** | Re-test after pivots or market shifts — 3 animals, 2 rounds, fast verdict |
